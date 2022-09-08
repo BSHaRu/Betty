@@ -223,8 +223,6 @@ table td {
 	$(function(){
 		checkLogList();
 		$('.custom-Loader').hide();
-		
-		
 	});
 		
 	$('#inqSubBtn').on('click', function(){
@@ -254,23 +252,23 @@ table td {
 		})
 	})	
 	
-		function checkLogList(){
-		$.getJSON("${path}/members/${user.id}/dashboard/chkLog", function(data){
-			let eventList = [];
-			$(data).each(function(i,e){
-			   			let obj = { startDate : new Date(e.checkTime), endDate : new Date(e.checkoutTime) };
-			   			eventList.push(obj);
-			   		});
-			
-			$("#container").simpleCalendar({
-				fixedStartDay: 0, 
-			    disableEmptyDetails: true, 
-			    months: ['1월','2월','3월','4월','5월','6월','7월'
-			    	 ,'8월','9월','10월','11월','12월'],
-			   	days: ['일','월','화','수','목','금','토'],
-			   	events: eventList
-		 	});
-		});
-	}
+	function checkLogList(){
+	$.getJSON("${path}/members/${user.id}/dashboard/chkLog", function(data){
+		let eventList = [];
+		$(data).each(function(i,e){
+		   			let obj = { startDate : new Date(e.checkTime), endDate : new Date(e.checkoutTime) };
+		   			eventList.push(obj);
+		   		});
+		
+		$("#container").simpleCalendar({
+			fixedStartDay: 0, 
+		    disableEmptyDetails: true, 
+		    months: ['1월','2월','3월','4월','5월','6월','7월'
+		    	 ,'8월','9월','10월','11월','12월'],
+		   	days: ['일','월','화','수','목','금','토'],
+		   	events: eventList
+	 	});
+	});
+}
 
 </script>

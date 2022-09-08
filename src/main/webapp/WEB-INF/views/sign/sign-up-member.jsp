@@ -51,10 +51,12 @@
 						성별
 						<div class="btn-group btn-group-toggle w-100"  data-toggle="buttons">
 							<label class="btn btn-outline-secondary text-white radio-gender">
-								<input type="radio" name="gender" id="male" value="male"> 남성
+								<input type="radio" name="gender" 
+									id="male" value="male"> 남성
 							</label>
 							<label class="btn btn-outline-secondary ml-2 text-white radio-gender">
-								<input type="radio" name="gender" id="female" value="female"> 여성
+								<input type="radio" name="gender" 
+									id="female" value="female"> 여성
 							</label>
 						</div>
 							<div class="result mb-3"></div>
@@ -77,12 +79,13 @@
 						전화번호
 						<div class="input__item">
 							<span><i class="bi bi-phone"></i></span>
-							<input type="text" name="phone" id="phone" placeholder="01056556747" /> 
+							<input type="text" name="phone" id="phone" placeholder="01012345678" /> 
 							<input type="button" class="btn btn-danger" value="인증코드 전송" id="sendSMS" disabled/>
 							<div class="result"></div>
 						</div>
 						
-						<div class="input-group flex-nowrap justify-content-center mb-4" style="display: none" id="codeWrap">
+						<div class="input-group flex-nowrap justify-content-center mb-4" 
+							style="display: none" id="codeWrap">
 							<input type="text" class="phone-code" />
 							<input type="button" class="btn btn-secondary smsAcceptCode" value="인증" />
 						</div> 
@@ -95,7 +98,8 @@
 							<div class="result"></div>
 						</div>
 						
-						<div class="input-group flex-nowrap justify-content-center mb-4" style="display: none" id="emailCodeWrap">
+						<div class="input-group flex-nowrap justify-content-center mb-4" 
+							style="display: none" id="emailCodeWrap">
 							<input type="text" class="email-code" />
 							<input type="button" class="btn btn-secondary emailAcceptCode" value="인증" />
 						</div>
@@ -155,7 +159,7 @@ $(function(){
 		var elP = $(this).parent().find(".result");
 		var message = "-를 제외한 숫자만 입력해주세요.";
 		boolPhone = checkRegex(elP, tempVal, regexMobile, message, null);
-		
+		 
 		if(boolPhone){
 			$("#sendSMS").attr("disabled", false);
 		} else {
@@ -199,20 +203,17 @@ $(function(){
 			url: '${path}/sign/up/sms',
 			data: { "code" : $(".phone-code").val() },
 			success: function(result){
-					alert("인증 성공 " + result);
-					$("#codeWrap").hide();
-					boolSMS = true;
-					$(".phone-code").val("");
+				alert("인증 성공 " + result);
+				$("#codeWrap").hide();
+				boolSMS = true;
+				$(".phone-code").val("");
 			},
 			error: function(error){
 				alert("인증 실패 ");
 				$(".phone-code").focus();
 			}
 		})
-		
 	});
-	
-	
 	
 	// 이메일 인증확인
 	$("#email").on("input", function(){
@@ -220,14 +221,13 @@ $(function(){
 		let elP = $(this).parent().find(".result");
 		let message = "이메일을 제대로 확인 주세요";
 		boolEmail = checkRegex(elP, tempVal, regexEmail, message, null);
-		
+		 
 		if(boolEmail){
 			$("#sendEmail").attr("disabled", false);
 		} else {
 			$("#sendEmail").attr("disabled", true);
 		}
 	});
-	
 	
 	$("#sendEmail").click(function(){
 		if(!boolEmail){
@@ -251,7 +251,6 @@ $(function(){
 				},
 				success : function(data){
 					alert(`\${userEmail}로 인증 코드가 전송되었습니다.` + data);
-					
 					$("#emailCodeWrap").show();
 				},
 				error : function(){
@@ -282,13 +281,15 @@ $(function(){
 		})
 	});
 	
-	
+	// (메서드 명)	| (사용자가 입력하는 값, 검증하는 화면 요소, rule 검증 값)
 	$.validator.addMethod("regex",function(value,element,regexpr){
 		return regexpr.test(value);
 	});
 	
-	
-	$("#signUpForm").validate({
+	// 이거 변수 선언 안해주니깐 submit 과정에서 무한루프 돌다가 submit 작동해서
+	// 변수 선언해주고 submitHandler에서 validation.destroy(); 해준 후
+	// $(form).submit(); 작동시키니깐 해결됨
+	var validation = $("#signUpForm").validate({
 		onkeyup : function(el){
 			$(el).valid();
 		},
@@ -323,12 +324,11 @@ $(function(){
 			    },
 			    rangelength : [2,10]
 			},
-//			birth : { required : true },
 			gender : { required : true },
-			addr : { required : true },
+			addrDetail : { required : true },
 			phone : { 
 			    required : true,
-			    minlength : 9,
+			    regex : regexMobile,
 			    remote :{
 			        type : "GET",
 			        url : "${path}/sign/up/phoneCheck"
@@ -336,7 +336,7 @@ $(function(){
 			},
 			email : { 
 			    required : true,
-			    minlength : 4,
+			    regex : regexEmail,
 			    remote :{
 			        type : "GET",
 			        url : "${path}/sign/up/emailCheck"
@@ -347,7 +347,7 @@ $(function(){
 			id : {
 				required : "아이디를 작성하세요.",
 				remote : "이미 존재하는 아이디입니다.",
-				regex : "영어와 숫자로 3~10글자 이내로 작성하세요."
+				regex : "특수 문자 제외하고 영어와 숫자로 3~10글자 이내로 작성하세요."
 			},
 			
 			pw : {
@@ -372,21 +372,16 @@ $(function(){
 				remote : "이미 존재하는 닉네임 입니다.",
 				rangelength : "닉네임은 2~10글자 이내로 작성하세요."
 			},
-			/* 
-			birth : {
-				required : "생년월일을 선택하세요."
-			},  */
-			
 			gender : { required : "성별을 확인하세요." },
-			addr : { required : "주소를 입력하세요." },
+			addrDetail : { required : "상세 주소를 입력하세요." },
 			phone : { 
 				required : "전화번호를 입력하세요.",
-				minlength : "전화번호를 입력해주세요.",
+				regex : "-를 제외한 숫자만 입력해주세요.",
 				remote : "이미 존재하는 번호입니다."
 			},
 			email : { 
 				required : "이메일을 입력하세요.",
-				minlength : "이메일 형식에 맞춰 입력해주세요.",
+				regex : "이메일을 제대로 확인 주세요.",
 				remote : "이미 존재하는 이메일입니다."
 				} 
 		},
@@ -396,25 +391,26 @@ $(function(){
 			if(element.prop("type") === 'radio'){ 
 				element.removeClass("text-danger");
 				error.insertAfter(element.parent().parent());
-			 } else if($(element).attr('id') === 'addr' || $(element).attr('id') === 'phone' || $(element).attr('id') === 'email'){
+			 } else if($(element).attr('id') === 'addrDetail' 
+						 || $(element).attr('id') === 'phone' 
+						 || $(element).attr('id') === 'email'){
 				error.insertAfter(element.next());		 		
 			} else {
 				error.insertAfter(element);
 			}
-		}
-	}); 
-	
-	$.validator.setDefaults({
-		submitHandler : function(){
+		},
+		submitHandler : function(form){
+			console.log("submit 검증");
 			if(!boolSMS){
 				alert("핸드폰 인증코드 확인 해주세요.");
 			}else if(!boolEmailCode){
 				alert("이메일 인증코드 확인 해주세요.");
 			}else{
-				$("#signUpForm").submit();
+				console.log("success");
+				validation.destroy();
+				$(form).submit();
 			}
 		}
-	});
-	
+	}); 
 });
 </script>
