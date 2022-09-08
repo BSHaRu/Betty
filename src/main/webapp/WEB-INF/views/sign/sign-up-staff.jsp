@@ -77,7 +77,7 @@
 						전화번호
 						<div class="input__item">
 							<span><i class="bi bi-phone"></i></span>
-							<input type="text" name="phone" id="phone" placeholder="01056556747" /> 
+							<input type="text" name="phone" id="phone" placeholder="01012345678" /> 
 							<input type="button" class="btn btn-danger" value="인증코드 전송" id="sendSMS" disabled/>
 							<div class="result"></div>
 						</div>
@@ -210,8 +210,6 @@ $(function(){
 		
 	});
 	
-	
-	
 	// 이메일 인증확인
 	$("#email").on("input", function(){
 		let tempVal = $("#email").val();
@@ -246,7 +244,6 @@ $(function(){
 				},
 				success : function(data){
 					alert(`\${userEmail}로 인증 코드가 전송되었습니다.` + data);
-					
 					$("#emailCodeWrap").show();
 				},
 				error : function(){
@@ -264,10 +261,10 @@ $(function(){
 			data: { "code" : $(".email-code").val() },
 			success: function(result){
 				console.log(result);
-					alert("이메일인증 성공 " + result);
-					$("#emailCodeWrap").hide();
-					boolEmailCode = true;
-					$(".email-code").val("");
+				alert("이메일인증 성공 " + result);
+				$("#emailCodeWrap").hide();
+				boolEmailCode = true;
+				$(".email-code").val("");
 			},
 			error: function(err){
 				console.log(err)
@@ -283,7 +280,7 @@ $(function(){
 	});
 	
 	
-	$("#signUpForm").validate({
+	var validation = $("#signUpForm").validate({
 		onkeyup : function(el){
 			$(el).valid();
 		},
@@ -318,16 +315,15 @@ $(function(){
 			    },
 			    rangelength : [2,10]
 			},
-//			birth : { required : true },
 			gender : { required : true },
-			addr : { required : true },
+			addrDetail : { required : true },
 			phone : { 
 			    required : true,
-			    minlength : 9	
+			    regex : regexMobile
 			},
 			email : { 
 			    required : true,
-			    minlength : 4,
+			    regex : regexEmail,
 			    remote :{
 			        type : "GET",
 			        url : "${path}/sign/up/emailCheck"
@@ -338,7 +334,7 @@ $(function(){
 			id : {
 				required : "아이디를 작성하세요.",
 				remote : "이미 존재하는 아이디입니다.",
-				regex : "영어와 숫자로 3~10글자 이내로 작성하세요."
+				regex : "특수 문자 제외하고 영어와 숫자로 3~10글자 이내로 작성하세요."
 			},
 			
 			pw : {
@@ -363,20 +359,15 @@ $(function(){
 				remote : "이미 존재하는 닉네임 입니다.",
 				rangelength : "닉네임은 2~10글자 이내로 작성하세요."
 			},
-			/* 			
-			birth : {
-				required : "생년월일을 선택하세요."
-			},
-			 */
 			gender : { required : "성별을 확인하세요." },
-			addr : { required : "주소를 입력하세요." },
+			addrDetail : { required : "상세 주소를 입력하세요." },
 			phone : { 
 				required : "전화번호를 입력하세요.",
-				minlength : "전화번호를 입력해주세요."	
+				regex : "-를 제외한 숫자만 입력해주세요."	
 			},
 			email : { 
 				required : "이메일을 입력하세요.",
-				minlength : "이메일 형식에 맞춰 입력해주세요.",
+				regex : "이메일을 제대로 확인 주세요.",
 				remote : "이미 존재하는 이메일입니다."
 				} 
 		},
@@ -386,25 +377,26 @@ $(function(){
 			if(element.prop("type") === 'radio'){ 
 				element.removeClass("text-danger");
 				error.insertAfter(element.parent().parent());
-			 } else if($(element).attr('id') === 'addr' || $(element).attr('id') === 'phone' || $(element).attr('id') === 'email'){
+			 } else if($(element).attr('id') === 'addrDetail' 
+					 || $(element).attr('id') === 'phone' 
+					 || $(element).attr('id') === 'email'){
 				error.insertAfter(element.next());		 		
 			} else {
 				error.insertAfter(element);
 			}
-		}
-	}); 
-	
-	$.validator.setDefaults({
-		submitHandler : function(){
+		},
+		submitHandler : function(form){
+			console.log("submit 검증");
 			if(!boolSMS){
 				alert("핸드폰 인증코드 확인 해주세요.");
 			}else if(!boolEmailCode){
 				alert("이메일 인증코드 확인 해주세요.");
 			}else{
-				$("#signUpForm").submit();
+				console.log("success");
+				validation.destroy();
+				$(form).submit();
 			}
 		}
-	});
-	
+	}); 
 });
 </script>

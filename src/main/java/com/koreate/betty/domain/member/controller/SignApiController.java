@@ -1,23 +1,19 @@
 package com.koreate.betty.domain.member.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.koreate.betty.domain.member.service.SignService;
 import com.koreate.betty.domain.member.util.SignHelper;
 import com.koreate.betty.domain.model.SessionConst;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,13 +70,14 @@ public class SignApiController {
 	}
 
 	@PostMapping("up/sms")
-	public String smsValid(String code, HttpSession session) {
-		String sessionCode = (String)session.getAttribute(SessionConst.SMS_CODE);
+	public ResponseEntity<String> smsValid(String code, HttpSession session) {
+		String sessionCode 
+			= (String)session.getAttribute(SessionConst.SMS_CODE);
 		if(code.equals(sessionCode)) {
 			session.invalidate();
-			return "1";
+			return new ResponseEntity<>("1",HttpStatus.OK);
 		}
-		return "0";
+		return new ResponseEntity<>("0",HttpStatus.BAD_REQUEST);
 	}
 
 	@GetMapping("up/email")
@@ -90,13 +87,14 @@ public class SignApiController {
 	}
 
 	@PostMapping("up/email")
-	public String emailValid(String code, HttpSession session) {
-		String sessionCode = (String)session.getAttribute(SessionConst.EMAIL_CODE);
+	public ResponseEntity<String> emailValid(String code, HttpSession session) {
+		String sessionCode 
+			= (String)session.getAttribute(SessionConst.EMAIL_CODE);
 		if(code.equals(sessionCode)) {
 			session.invalidate();
-			return "1";
+			return new ResponseEntity<>("1",HttpStatus.OK);
 		}
-		return "0";
+		return new ResponseEntity<>("0",HttpStatus.BAD_REQUEST);
 	}
 	
 	@Data
