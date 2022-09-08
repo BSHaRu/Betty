@@ -1,1 +1,1 @@
-# project-betty
+# 국비지원 최종 프로젝트 Betty - 사립도서관
