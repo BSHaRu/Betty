@@ -1,0 +1,243 @@
+
+/* 공통 table? */
+
+.table_tr{
+	background : #fafafa;
+	text-align: center;
+	color : #272727;
+}
+
+.table_tr .table_th{
+	background: #3c3d55;
+	color: #fafafa;
+	vertical-align: middle;
+}
+
+
+.margin_bottom{
+	margin-bottom: 50px !important;
+}
+
+/* 멤버십 관련 table */
+.membership_title h2{
+	color : #fafafa;
+	font-weight: 700;
+	line-height: 21px;
+	text-transform: uppercase;
+	padding-left: 20px;
+	position: relative;
+	font-family: "Oswald", sans-serif;
+	margin-bottom: 30px;
+}
+
+.membership_title h2:after{
+	position: absolute;
+	left: 0;
+	top: -6px;
+	height: 32px;
+	width: 4px;
+	background: #e53637;
+	content: "";
+}
+
+
+.table_tr td{
+	vertical-align: middle;
+}
+
+/* 도서 대여 관련 table */
+
+.betty-table{
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+.row .table-detail-search{
+    border-collapse: collapse;
+    border-radius: 5px;
+    color: #fafafa;
+    background: rgba(255, 255, 255, 0.2);
+    width: 80%;
+}
+
+.table-detail-search a {
+    background: #fafafa;
+	color:#3C3D55;
+	padding: 6px 20px;
+	letter-spacing: 2px;
+	border-radius: 2px;
+	margin-right: 14px;
+    cursor: pointer;
+}
+
+.table-detail-search tr {
+    height: 2rem;
+}
+
+.table-detail-search tr th{
+    text-align: center;
+}
+
+
+.table-detail-search input{
+    margin-left: 5px;
+}
+
+.table-data-list{
+    width: 100%;
+    color: #fafafa;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 10px;
+    border-collapse: collapse;
+    border-color: #0B0C2A;
+}
+
+.table-data-list tr{
+    text-align: center;
+    font-size: 12px;
+    height: 30px;
+}
+
+.table-data-list tr td{
+    max-width: 250px;
+    overflow-wrap: break-word;
+}
+
+/*--------------------------------------------------------------------------------  */
+.table-responsive {
+    margin: 30px 0;
+}
+.table-wrapper {
+    width: 100%;
+    background: #0B0C2A;
+    padding: 20px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+.table-title {
+    font-size: 2rem;
+    padding-bottom: 10px;
+    margin: 0 0 10px;
+    min-height: 45px;
+}
+.table-title h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+.table-title select {
+    border-color: #ddd;
+    border-width: 0 0 1px 0;
+    padding: 3px 10px 3px 5px;
+    margin: 0 5px;
+}
+.table-title .show-entries {
+    margin-top: 7px;
+}
+.search-box {
+    position: relative;
+    float: right;
+}
+.search-box .input-group {
+    min-width: 200px;
+    position: absolute;
+    right: 0;
+}
+.search-box .input-group-addon, .search-box input {
+    border-color: #ddd;
+    border-radius: 0;
+}
+.search-box .input-group-addon {
+    border: none;
+    border: none;
+    background: transparent;
+    position: absolute;
+    z-index: 9;
+}
+.search-box input {
+    height: 34px;
+    padding-left: 28px;		
+    box-shadow: none !important;
+    border-width: 0 0 1px 0;
+}
+.search-box input:focus {
+    border-color: #3FBAE4;
+}
+.search-box i {
+    color: #a0a5b1;
+    font-size: 19px;
+    position: relative;
+    top: 8px;
+}
+table.table tr th, table.table tr td {
+    border-color: #212529;
+}
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+table.table td a {
+    color: #a0a5b1;
+    display: inline-block;
+    margin: 0 5px;
+}
+table.table td a.view {
+    color: #03A9F4;
+}
+table.table td a.reserve {
+    color: #FFC107;
+}
+table.table td a.delete {
+    color: #E34724;
+}
+table.table td i {
+    font-size: 19px;
+}    
+.pagination {
+    float: right;
+    margin: 0 0 5px;
+}
+.pagination li a {
+    border: none;
+    font-size: 13px;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 0 10px;
+    color: #999;
+    margin: 0 2px;
+    line-height: 30px;
+    border-radius: 30px !important;
+    text-align: center;
+}
+.pagination li a:hover {
+    color: #666;
+}	
+.pagination li.active a {
+    background: #03A9F4;
+}
+.pagination li.active a:hover {        
+    background: #0397d6;
+}
+.pagination li.disabled i {
+    color: #ccc;
+}
+.pagination li i {
+    font-size: 16px;
+    padding-top: 6px
+}
+.hint-text {
+    float: left;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.oneLine h2, .oneLine h5{
+	display: inline;
+}
+.inlineClass{
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+}
